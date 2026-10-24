@@ -1,0 +1,44 @@
+[
+  {
+    "dataset": "WINDFOR",
+    "publishTime": "2026-01-01T07:30:00Z",
+    "startTime": "2026-01-02T00:00:00Z",
+    "generation": 12800
+  },
+  {
+    "dataset": "WINDFOR",
+    "publishTime": "2026-01-01T07:30:00Z",
+    "startTime": "2026-01-02T01:00:00Z",
+    "generation": 12300
+  },
+  {
+    "dataset": "WINDFOR",
+    "publishTime": "2026-01-01T07:30:00Z",
+    "startTime": "2026-01-02T02:00:00Z",
+    "generation": 11700
+  },
+  {
+    "dataset": "WINDFOR",
+    "publishTime": "2026-01-01T09:30:00Z",
+    "startTime": "2026-01-02T00:00:00Z",
+    "generation": 12650
+  },
+  {
+    "dataset": "WINDFOR",
+    "publishTime": "2026-01-01T09:30:00Z",
+    "startTime": "2026-01-02T01:00:00Z",
+    "generation": 12200
+  },
+  {
+    "dataset": "WINDFOR",
+    "publishTime": "2026-01-01T09:30:00Z",
+    "startTime": "2026-01-02T02:00:00Z",
+    "generation": 11600
+  },
+  {
+    "dataset": "WINDFOR",
+    "publishTime": "2026-01-01T14:30:00Z",
+    "startTime": "2026-01-02T00:00:00Z",
+    "generation": 12510
+  }
+]
