@@ -1,0 +1,111 @@
+@import "tailwindcss";
+
+:root {
+  --font-sans: -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  --font-mono: "SF Mono", ui-monospace, Menlo, Monaco, Consolas, monospace;
+
+  /* Apple-inspired Light Palette */
+  --bg-app: #fbfbfa;
+  --bg-surface: #ffffff;
+  --bg-surface-subtle: #f4f4f5;
+  --bg-surface-elevated: #ffffff;
+  
+  --border-subtle: rgba(0, 0, 0, 0.07);
+  --border-strong: rgba(0, 0, 0, 0.14);
+
+  --text-primary: #18181b;
+  --text-secondary: #52525b;
+  --text-muted: #71717a;
+  --text-faint: #a1a1aa;
+
+  --accent-blue: #2563eb;
+  --accent-blue-hover: #1d4ed8;
+  --accent-blue-subtle: rgba(37, 99, 235, 0.08);
+
+  /* Energy Domain Semantic Colors */
+  --color-forecast: #0284c7;        /* Sky-600: Selected Wind Forecast */
+  --color-forecast-fill: rgba(2, 132, 199, 0.12);
+  --color-actual: #0d9488;          /* Teal-600: Actual Outturn Wind Generation */
+  --color-actual-fill: rgba(13, 148, 136, 0.12);
+
+  /* Error Convention: Forecast - Actual */
+  --color-overforecast: #ea580c;    /* Orange-600: Positive error (Forecast > Actual) */
+  --color-underforecast: #4f46e5;   /* Indigo-600: Negative error (Forecast < Actual) */
+  --color-zero-baseline: #94a3b8;
+
+  --status-healthy: #16a34a;
+  --status-warning: #d97706;
+  --status-critical: #dc2626;
+
+  --shadow-subtle: 0 1px 2px 0 rgba(0, 0, 0, 0.03), 0 1px 3px 1px rgba(0, 0, 0, 0.02);
+  --shadow-card: 0 2px 6px -1px rgba(0, 0, 0, 0.04), 0 1px 4px -1px rgba(0, 0, 0, 0.02);
+  --shadow-elevated: 0 10px 25px -5px rgba(0, 0, 0, 0.06), 0 8px 10px -6px rgba(0, 0, 0, 0.04);
+}
+
+.dark {
+  /* Apple-inspired Dark Palette */
+  --bg-app: #090a0f;
+  --bg-surface: #12141c;
+  --bg-surface-subtle: #191c28;
+  --bg-surface-elevated: #1e2230;
+
+  --border-subtle: rgba(255, 255, 255, 0.08);
+  --border-strong: rgba(255, 255, 255, 0.16);
+
+  --text-primary: #f4f4f5;
+  --text-secondary: #cbd5e1;
+  --text-muted: #94a3b8;
+  --text-faint: #64748b;
+
+  --accent-blue: #3b82f6;
+  --accent-blue-hover: #60a5fa;
+  --accent-blue-subtle: rgba(59, 130, 246, 0.15);
+
+  --color-forecast: #38bdf8;
+  --color-forecast-fill: rgba(56, 189, 248, 0.15);
+  --color-actual: #2dd4bf;
+  --color-actual-fill: rgba(45, 212, 191, 0.15);
+
+  --color-overforecast: #fb923c;
+  --color-underforecast: #818cf8;
+  --color-zero-baseline: #64748b;
+
+  --status-healthy: #22c55e;
+  --status-warning: #f59e0b;
+  --status-critical: #ef4444;
+
+  --shadow-subtle: 0 1px 3px 0 rgba(0, 0, 0, 0.25);
+  --shadow-card: 0 3px 8px -1px rgba(0, 0, 0, 0.35);
+  --shadow-elevated: 0 12px 30px -5px rgba(0, 0, 0, 0.5);
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  font-family: var(--font-sans);
+  background-color: var(--bg-app);
+  color: var(--text-primary);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Numeric tables and timestamps should always align precisely */
+.tabular-nums {
+  font-variant-numeric: tabular-nums;
+}
+
+/* Custom scrollbars */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background: rgba(150, 150, 150, 0.25);
+  border-radius: 9999px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(150, 150, 150, 0.4);
+}
