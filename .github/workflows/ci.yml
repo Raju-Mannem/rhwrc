@@ -1,0 +1,76 @@
+name: Gridbricks Backend CI
+
+on:
+  push:
+    branches: [main, master, develop]
+  pull_request:
+    branches: [main, master, develop]
+
+jobs:
+  quality-and-test:
+    name: Code Quality & Automated Tests
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: backend
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Install uv
+        uses: astral-sh/setup-uv@v4
+        with:
+          version: "latest"
+          enable-cache: true
+
+      - name: Set up Python 3.12
+        run: uv python install 3.12
+
+      - name: Install Dependencies
+        run: |
+          uv venv
+          uv pip install ".[dev]"
+
+      - name: Run Ruff Formatting Check
+        run: uv run ruff format --check .
+
+      - name: Run Ruff Linting
+        run: uv run ruff check .
+
+      - name: Verify Alembic Migrations
+        run: |
+          uv run alembic upgrade head
+
+      - name: Run Pytest with Coverage Gate
+        run: |
+          uv run pytest tests/ --cov=app --cov-report=term-missing --cov-report=xml --cov-fail-under=75
+
+      - name: Upload Test Coverage
+        uses: actions/upload-artifact@v4
+        with:
+          name: coverage-report
+          path: backend/coverage.xml
+          if-no-files-found: ignore
+
+  docker-build:
+    name: Docker Container Build Check
+    runs-on: ubuntu-latest
+    needs: quality-and-test
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Build Production Image
+        uses: docker/build-push-action@v5
+        with:
+          context: ./backend
+          file: ./backend/Dockerfile
+          push: false
+          tags: gridbricks-backend:ci-test
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
