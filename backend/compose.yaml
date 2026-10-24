@@ -1,0 +1,75 @@
+services:
+  api:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: gridbricks-api
+    ports:
+      - "8000:8000"
+    environment:
+      - APP_NAME=gridbricks-backend
+      - ENVIRONMENT=production
+      - LOG_LEVEL=INFO
+      - DEBUG=false
+      - HOST=0.0.0.0
+      - PORT=8000
+      - WORKERS=2
+      - DATABASE_URL=postgresql+psycopg://gridbricks_user:gridbricks_pass@db:5432/gridbricks_prod
+      - UPSTASH_REDIS_URL=redis://redis:6379/0
+      - ELEXON_BASE_URL=https://data.elexon.co.uk/bmrs/api/v1
+      - DECISION_DATE_MODE=DECISION_DATE
+      - DECISION_TIMEZONE=Europe/London
+      - DECISION_CUTOFF_LOCAL_TIME=10:00
+      - DECISION_LEAD_DAYS=1
+      - DECISION_CUTOFF_INCLUSIVE=true
+      - FORECAST_SELECTION_POLICY=latest_complete_publication
+      - SNAPSHOT_COMPLETENESS_THRESHOLD=0.95
+      - FORECAST_INTERVAL_ALIGNMENT=STEP_FORWARD
+    depends_on:
+      db:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8000/health/live"]
+      interval: 15s
+      timeout: 5s
+      retries: 3
+      start_period: 10s
+
+  db:
+    image: postgres:16-alpine
+    container_name: gridbricks-postgres
+    environment:
+      - POSTGRES_USER=gridbricks_user
+      - POSTGRES_PASSWORD=gridbricks_pass
+      - POSTGRES_DB=gridbricks_prod
+    ports:
+      - "5432:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U gridbricks_user -d gridbricks_prod"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  redis:
+    image: redis:7-alpine
+    container_name: gridbricks-redis
+    ports:
+      - "6379:6379"
+    volumes:
+      - redisdata:/data
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+volumes:
+  pgdata:
+  redisdata:
