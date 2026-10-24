@@ -4,6 +4,8 @@ Generates clear, colloquial plain English explanatory summaries for procurement 
 and trading executives, translating raw metrics and interval errors into actionable narrative insights.
 """
 
+import time
+
 import httpx
 
 from app.core.config import get_settings
@@ -60,8 +62,6 @@ def generate_fallback_colloquial_summary(
 
     return summary
 
-
-import time
 
 class LLMSummarizer:
     """Summarization service utilizing Hugging Face Llama models with deterministic offline fallback."""
@@ -147,4 +147,3 @@ def get_llm_summarizer() -> LLMSummarizer:
     if _summarizer is None:
         _summarizer = LLMSummarizer()
     return _summarizer
-
